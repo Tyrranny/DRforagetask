@@ -1,0 +1,39 @@
+I am lower level, so many users may find Mags asking for items that the script declines, because that target is not defined (SOME ARE NOT DEFINED ON PURPOSE, LIKE TARGETS NOT NEAR CROSSING). 
+
+Below are the steps to defining your own target.
+
+1. Target declined, so get the data you need. Below if a offer that isnt defined, and you will notice that the script repeates how many she asked for and what the item is. I capitalized the item here, BERRIES, but it could be multiple words, like BITS OF SAP
+
+The firewood peddler Mags says, "I do have a small task I'd like for you to perform.  I need 14 berries.  If you could get those for me, I would greatly appreciate it."
+[You may accept by typing ACCEPT TASK, or decline by typing DECLINE TASK]
+>
+[foragetask: Number is 14 and item is BERRIES.]
+berries not found in database
+[foragetask]>Decline Task
+
+2. Now that we have our item, we research possible reasons it is not already in and add it if it meets requirements. I use https://www.olwydd.org/herbs/compendium.php first to see if it is seasonal or has special restrictions, as we want the script to be reliable, and not get stuck because it cannot find an item. 
+
+3. I then check https://www.olwydd.org/herbs/forage.php to get the exact locations (and usually some more details about restrictions will be listed) to ensure it is in or near crossing.
+
+4. I then go to that location and test to make sure it forages from there. Now when you choose locations, I try to do Town Green if it is available, it is closest to mags, after that I go to the next nearest room, but you can pick any room it is available in if you wish. Record the room number
+
+5. Now we know our TARGET (Step 1.) and our ROOM NUMBER (Step 4.) and our NAME (Step 4 when you tested foraging, exact name you used after forage), so we are ready to define our target in the script.
+
+6. Open the script and near the top you will see where targets are defined like below (partial, not the whole list). Notice they are in Alphabetical order by the NAME (First attribute of 3, NAME, ROOM and TARGET)
+
+  {"name" => "acorn", "room" => "792", "target" => "acorns"},
+	{"name" => "blue flower", "room" => "792", "target" => "blue flowers"},
+	{"name" => "branch", "room" => "792", "target" => "branches"},
+	{"name" => "chamomile", "room" => "792", "target" => "some chamomile"},
+	{"name" => "corn", "room" => "19343", "target" => "pieces of corn"},
+	{"name" => "georin grass", "room" => "851", "target" => "georin grasses"},
+	{"name" => "grass", "room" => "792", "target" => "grasses"},
+  
+7. Now find where your's should go alphabetically, and copy the entry above it, including the COMMA AT THE END. 
+8. Hit ENTER to create an empty line below that, and paste in the copied line.
+9. Now chaneg the NAME, ROOM and TARGET to the values you are defining, on the new line.
+10. Click save! 
+
+Please post this new line here as well, so it can be added to the SOURCE code for everyone else :).
+
+As always please let me know if you need anything or any help!
