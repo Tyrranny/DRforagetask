@@ -19,4 +19,5 @@ Notes:
 Sometimes you can have multiple Targets for the same Forage Item. An example is below. As you can see they both with forage limbs, but they have different assignments from Mags. 
 
 {"name" => "limb", "room" => "792", "target" => "limbs"},
+
 {"name" => "limb", "room" => "792", "target" => "sticks, branches or limbs"},
