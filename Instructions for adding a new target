@@ -21,7 +21,7 @@ berries not found in database
 
 6. Open the script and near the top you will see where targets are defined like below (partial, not the whole list). Notice they are in Alphabetical order by the NAME (First attribute of 3, NAME, ROOM and TARGET)
 
-  {"name" => "acorn", "room" => "792", "target" => "acorns"},
+        {"name" => "acorn", "room" => "792", "target" => "acorns"},
 	{"name" => "blue flower", "room" => "792", "target" => "blue flowers"},
 	{"name" => "branch", "room" => "792", "target" => "branches"},
 	{"name" => "chamomile", "room" => "792", "target" => "some chamomile"},
