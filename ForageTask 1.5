@@ -61,27 +61,27 @@ class Foragetask
  
  
   def gettask
-  fput('ask mags for task')
-  lines = reget(4)
-  lines.each do |line|
-    case line
-    when /I need (\d+) (.+)\.  If/
-      number = Regexp.last_match(1).to_i
-      item = Regexp.last_match(2)
-      echo "Number is #{number} and item is #{item}."
-      set_target(item, number)
-    when /I am sorry, you must wait/
-      do_wait
-	when /You are already on a task/
-	  cancel_task
+    fput('ask mags for task')
+    lines = reget(4)
+    lines.each do |line|
+      case line
+      when /I need (\d+) (.+)\.  If/
+        number = Regexp.last_match(1).to_i
+        item = Regexp.last_match(2)
+        echo "Number is #{number} and item is #{item}."
+        set_target(item, number)
+      when /I am sorry, you must wait/
+        do_wait
+	  when /You are already on a task/
+	    cancel_task
+      end
     end
-  end
   end
  
   def do_wait
-  echo "pausing for mags to reset"
-  sleep 30
-  gettask
+    echo "pausing for mags to reset"
+    sleep 30
+    gettask
   end
  
   def cancel_task
@@ -94,12 +94,12 @@ class Foragetask
   def bad_target
     start_script('go2', ['954']); wait_while { running? 'go2' }
 	cancel_task
- 
-  def decline
-  fput('Decline Task')
-  do_wait
   end
- 
+  
+  def decline
+    fput('Decline Task')
+    do_wait
+  end 
  
   def set_target(target, number)
     hash=$forage_items.find {|x| x["target"] == target }
@@ -116,48 +116,49 @@ class Foragetask
   end
  
   def givemags(item, number)
-  start_script('go2', ['954']); wait_while { running? 'go2' }
-  $i = 0
-  $num=#number.to_i
-  while $i < $num do
-    fput("get #{item} from my #$forage_container")
-    fput("Give #{item} to Mags")
-    $i = $i + 1
-  end
-  if DRSkill.getxp('Trading') > 30
-    exit
-  else
-    fput("sk trading")
-    echo "Waiting to get another Task!"
-    do_wait
-  end
+    start_script('go2', ['954']); wait_while { running? 'go2' }
+    $i = 0
+    $num=#number.to_i
+    while $i < $num do
+      fput("get #{item} from my #$forage_container")
+      fput("Give #{item} to Mags")
+      $i = $i + 1
+    end
+    if DRSkill.getxp('Trading') > 30
+      exit
+    else
+      fput("sk trading")
+      echo "Waiting to get another Task!"
+      do_wait
+    end
   end
  
   def collect_item(item, number, room)
-  fput('Accept Task')
-  if DRC.right_hand || DRC.left_hand
-    fput('stow left')
-    fput('stow right')
-  end
-  sleep 1
-  $num = number.to_i
-  start_script('go2', ["#{room}"]); wait_while { running? 'go2' }
-  sleep 1
-  $i=0
-  echo "foraging for #{number} #{item}"
-  while $i < $num do
-    case DRC.bput("forage #{item}", 'but are unable', 'You manage to find', 'You forage around and believe', 'You begin scanning', 'You wander around')
-    when /You manage to find/
-      $i = $i + 1
-      echo "Found #$i #{item} of #$num"
-      waitrt
-      fput("put #{item} in my #$forage_container")
-	when 'You forage around and believe', 'You wander around', 'You begin scanning the area before you'
-	  bad_target
+    fput('Accept Task')
+    if DRC.right_hand || DRC.left_hand
+      fput('stow left')
+      fput('stow right')
     end
+    sleep 1
+    $num = number.to_i
+    start_script('go2', ["#{room}"]); wait_while { running? 'go2' }
+    sleep 1
+    $i=0
+    echo "foraging for #{number} #{item}"
+    while $i < $num do
+      case DRC.bput("forage #{item}", 'but are unable', 'You manage to find', 'You forage around and believe', 'You begin scanning', 'You wander around')
+      when /You manage to find/
+        $i = $i + 1
+        echo "Found #$i #{item} of #$num"
+        waitrt
+        fput("put #{item} in my #$forage_container")
+	  when 'You forage around and believe', 'You wander around', 'You begin scanning the area before you'
+	    bad_target
+      end
+    end
+    givemags(item,number)
   end
-  givemags(item,number)
-  end
+  
 end
  
 Foragetask.new
